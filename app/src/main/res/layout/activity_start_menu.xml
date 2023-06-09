@@ -1,0 +1,104 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/player_X"
+        android:visibility="invisible"
+        android:background="@drawable/cross"
+        android:backgroundTint="@color/black"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/player_O"
+        android:visibility="invisible"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/black"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/player_X"
+        app:layout_constraintEnd_toEndOf="@+id/player_X"
+        app:layout_constraintStart_toStartOf="@+id/player_X"
+        app:layout_constraintTop_toTopOf="@+id/player_X" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!-- Player Choices -->
+        <RadioGroup
+            android:id="@+id/playerChoiceGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <RadioButton
+                android:id="@+id/playerXRadioButton"
+                android:onClick="Show_X"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_radio_button"
+                android:button="@color/trans"
+                android:gravity="center"
+                android:text="@string/player_two"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/playerORadioButton"
+                android:onClick="Show_O"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="100sp"
+                android:background="@drawable/custom_radio_button"
+                android:button="@color/trans"
+                android:gravity="center"
+                android:text="@string/player_one"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+        </RadioGroup>
+        <!-- Board Choice -->
+        <TextView
+            android:id="@+id/boardChoiceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/selection"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/board_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+        <!-- Start Game Button -->
+        <Button
+            android:onClick="start_game"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="157dp"
+            android:background="@drawable/button_selector"
+            android:text="@string/game_start"
+            android:textAllCaps="false"
+            android:textColor="@color/ash"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

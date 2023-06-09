@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">game ver 1.0.0</string>
+    <!-- nav bar string resources -->
+    <string name="navigation_open"> open  </string>
+    <string name="navigation_close"> close </string>
+    <!-- board choices -->
+    <string name="selection">select board</string>
+    <string name="ThreeCrossThree">3 X 3</string>
+    <string name="FOurCrossFour">4 X 4</string>
+    <string name="SixCrossSix">6 X 6</string>
+    <string-array name="BoardChoices">
+        <item>@string/ThreeCrossThree</item>
+        <item>@string/FOurCrossFour</item>
+        <item>@string/SixCrossSix</item>
+    </string-array>
+    <!-- game string resources -->
+    <string name="game_start"> start    </string>
+    <string name="game_menu"> menu    </string>
+    <string name="game_exit"> exit    </string>
+    <string name="game_win"> win      </string>
+    <string name="game_draw"> draw     </string>
+    <string name="game_repeat"> retry   </string>
+    <string name="game_next"> next     </string>
+    <string name="player_one"> circle </string>
+    <string name="player_two"> cross </string>
+</resources>
