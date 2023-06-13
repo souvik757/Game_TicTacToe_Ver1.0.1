@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,6 +20,7 @@
             android:gravity="center"
             android:layout_marginTop="10dp">
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button_menu"
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:textAllCaps="false"
@@ -31,6 +31,7 @@
                 android:layout_width="200dp"
                 android:layout_height="60dp"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button_exit"
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:textAllCaps="false"
@@ -45,11 +46,13 @@
             android:layout_marginTop="40dp"
             android:orientation="horizontal">
             <ImageView
+                android:id="@+id/winner_circle"
                 android:background="@drawable/circle"
                 android:layout_width="100dp"
                 android:visibility="invisible"
                 android:layout_height="100dp"/>
             <ImageView
+                android:id="@+id/winner_cross"
                 android:background="@drawable/cross"
                 android:layout_width="100dp"
                 android:visibility="invisible"
@@ -57,6 +60,7 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/GameBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/ash"
@@ -68,25 +72,28 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
-
                 android:layout_marginBottom="5dp"
+                android:onClick="GameAct"
                 />
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
-
                 android:layout_marginStart="5dp"
+                android:onClick="GameAct"
                 />
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
-
                 android:layout_marginStart="5dp"
+                android:onClick="GameAct"
                 />
         </LinearLayout>
         <LinearLayout
@@ -94,25 +101,28 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
-
                 android:layout_marginBottom="5dp"
+                android:onClick="GameAct"
                 />
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button5"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
-
                 android:layout_marginStart="5dp"
+                android:onClick="GameAct"
                 />
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button6"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
-
                 android:layout_marginStart="5dp"
+                android:onClick="GameAct"
                 />
         </LinearLayout>
         <LinearLayout
@@ -120,32 +130,37 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/button_bg_1"/>
-            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button7"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
-
-                android:layout_marginStart="5dp"
-                />
+                android:onClick="GameAct"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button8"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
-
                 android:layout_marginStart="5dp"
+                android:onClick="GameAct"
                 />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Button9"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/button_bg_1"
+                android:layout_marginStart="5dp"
+                android:onClick="GameAct"/>
         </LinearLayout>
     </LinearLayout>
     <ImageView
+        android:id="@+id/Button_turn"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
         />
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Button_retry"
         android:visibility="invisible"
         android:layout_width="100dp"
         android:layout_height="60dp"

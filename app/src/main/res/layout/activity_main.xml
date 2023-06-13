@@ -30,11 +30,13 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn2"
                 android:background="@drawable/circle"
+                android:backgroundTint="@color/green"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn3"
                 android:background="@drawable/cross"
+                android:backgroundTint="@color/white"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
         </LinearLayout>
@@ -52,11 +54,13 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn5"
                 android:background="@drawable/cross"
+                android:backgroundTint="@color/sky"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn6"
                 android:background="@drawable/cross"
+                android:backgroundTint="@color/green"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
         </LinearLayout>
@@ -69,11 +73,13 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn7"
                 android:background="@drawable/cross"
+                android:backgroundTint="@color/blue"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn8"
                 android:background="@drawable/circle"
+                android:backgroundTint="@color/red"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <androidx.appcompat.widget.AppCompatButton
