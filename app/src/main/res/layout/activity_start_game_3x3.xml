@@ -21,6 +21,7 @@
             android:layout_marginTop="10dp">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/Button_menu"
+                android:onClick="GoToMenu"
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:textAllCaps="false"
@@ -32,6 +33,7 @@
                 android:layout_height="60dp"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/Button_exit"
+                android:onClick="GoToExit"
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:textAllCaps="false"
@@ -73,11 +75,11 @@
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/Button1"
+                android:onClick="GameAct"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/button_bg_1"
                 android:layout_marginBottom="5dp"
-                android:onClick="GameAct"
                 />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/Button2"
@@ -161,6 +163,7 @@
         />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/Button_retry"
+        android:onClick="LaunchGame"
         android:visibility="invisible"
         android:layout_width="100dp"
         android:layout_height="60dp"

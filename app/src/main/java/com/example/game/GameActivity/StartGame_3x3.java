@@ -1,23 +1,34 @@
 package com.example.game.GameActivity;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import android.content.res.ColorStateList;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.game.GameLogic.* ;
+
+import com.example.game.ModelView.StartMenu;
 import com.example.game.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class StartGame_3x3 extends AppCompatActivity {
     private int counter = -1 ;
-    private Button[][] Button ;
+    private Button[][] button;
+    private Button ButtonRetry ;
+    private Map<Button , Integer> val = new HashMap<>() ;
     private LinearLayout Board ;
     private ImageView PlayerTurn ;
+    private ImageView CircleWin ;
+    private ImageView CrossWin ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,20 +38,32 @@ public class StartGame_3x3 extends AppCompatActivity {
         InitializeAnimations();
     }
     private void InitializeWidgets(){
-        Button = new Button[3][3] ;
-        Button[0][0] = findViewById(R.id.Button1) ;
-        Button[0][1] = findViewById(R.id.Button2) ;
-        Button[0][2] = findViewById(R.id.Button3) ;
-        Button[1][0] = findViewById(R.id.Button4) ;
-        Button[1][1] = findViewById(R.id.Button5) ;
-        Button[1][2] = findViewById(R.id.Button6) ;
-        Button[2][0] = findViewById(R.id.Button7) ;
-        Button[2][1] = findViewById(R.id.Button8) ;
-        Button[2][2] = findViewById(R.id.Button9) ;
+        button = new Button[3][3] ;
+        button[0][0] = findViewById(R.id.Button1) ;
+        button[0][1] = findViewById(R.id.Button2) ;
+        button[0][2] = findViewById(R.id.Button3) ;
+        button[1][0] = findViewById(R.id.Button4) ;
+        button[1][1] = findViewById(R.id.Button5) ;
+        button[1][2] = findViewById(R.id.Button6) ;
+        button[2][0] = findViewById(R.id.Button7) ;
+        button[2][1] = findViewById(R.id.Button8) ;
+        button[2][2] = findViewById(R.id.Button9) ;
+        ButtonRetry  = findViewById(R.id.Button_retry) ;
+        InitializeBoard() ;
     }
+
+    private void InitializeBoard() {
+        for (int i = 0 ; i < 3  ; i ++){
+            for (int j = 0 ; j < 3 ; j ++)
+                val.putIfAbsent(button[i][j] , raw.empty) ;
+        }
+    }
+
     private void InitializeViews(){
         Board = findViewById(R.id.GameBoard) ;
         PlayerTurn = findViewById(R.id.Button_turn) ;
+        CircleWin = findViewById(R.id.winner_circle) ;
+        CrossWin = findViewById(R.id.winner_cross) ;
         PlayerTurn.setBackground(getDrawable(R.drawable.circle));
     }
     private void InitializeAnimations(){
@@ -50,14 +73,105 @@ public class StartGame_3x3 extends AppCompatActivity {
     public void GameAct(View view){
         // increase counter
         counter++ ;
+        if(counter == 1)
+            ButtonRetry.setVisibility(View.VISIBLE);
         view.findViewById(view.getId()).setEnabled(false);
         if(counter % 2 == 0) { // circle ::
             view.findViewById(view.getId()).setBackground(getDrawable(R.drawable.circle_bg));
             PlayerTurn.setBackground(getDrawable(R.drawable.cross));
+            val.put(view.findViewById(view.getId()) , raw.circle) ;
         }
-        else{ // cross ::
+        else { // cross ::
             view.findViewById(view.getId()).setBackground(getDrawable(R.drawable.cross_bg));
             PlayerTurn.setBackground(getDrawable(R.drawable.circle));
+            val.put(view.findViewById(view.getId()) , raw.cross) ;
         }
+        String winner = CheckForWinner() ;
+        if(counter < 8){
+            if(!winner.equals("draw")){
+                if(winner.equals("circle")){
+                    CircleWin.setVisibility(View.VISIBLE);
+                }
+                if(winner.equals("cross")){
+                    CrossWin.setVisibility(View.VISIBLE);
+                }
+                DisableCLick() ;
+            }
+        }
+        else{
+            if(!winner.equals("draw")){
+                if(winner.equals("circle")){
+                    CircleWin.setVisibility(View.VISIBLE);
+                }
+                if(winner.equals("cross")){
+                    CrossWin.setVisibility(View.VISIBLE);
+                }
+            }
+            else{
+                ChangeBackground();
+                Toast.makeText(this, "draw", Toast.LENGTH_SHORT).show();
+            }
+            DisableCLick() ;
+        }
+
+    }
+    private String CheckForWinner(){
+        ThreeLogic obj = new ThreeLogic(button , val) ;
+        int X = obj.CheckRow() ;
+        int Y = obj.CheckCol() ;
+        int Z = obj.CheckDiagonal() ;
+        if(X != -1 || Y != -1 || Z != -1){
+            if(X != -1){
+                if(X == raw.circle)
+                    return "circle" ;
+                if(X == raw.cross)
+                    return "cross" ;
+            }
+            if(Y != -1){
+                if(Y == raw.circle)
+                    return "circle" ;
+                if(Y == raw.cross)
+                    return "cross" ;
+            }
+            if(Z != -1){
+                if(Z == raw.circle)
+                    return "circle" ;
+                if(Z == raw.cross)
+                    return "cross" ;
+            }
+        }
+        return "draw" ;
+    }
+    private void ChangeBackground(){
+        int startColor = getResources().getColor(R.color.ash);
+        int endColor = getResources().getColor(R.color.red);
+
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
+        colorAnimation.setDuration(3000); // Duration in milliseconds
+
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                Board.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+        });
+        colorAnimation.start();
+    }
+    private void DisableCLick(){
+        for (int i = 0 ; i < 3  ; i ++){
+            for (int j = 0 ; j < 3 ; j ++)
+                button[i][j].setEnabled(false);
+        }
+    }
+    public void GoToMenu(View view){
+        startActivity(new Intent(this , StartMenu.class));
+        finish() ;
+    }
+    public void GoToExit(View view){
+        finish() ;
+    }
+    public void LaunchGame(View view){
+        startActivity(new Intent(this , StartGame_3x3.class));
+        finish() ;
     }
 }
