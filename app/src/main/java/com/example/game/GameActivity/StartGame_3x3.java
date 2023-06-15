@@ -3,6 +3,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -164,14 +167,59 @@ public class StartGame_3x3 extends AppCompatActivity {
         }
     }
     public void GoToMenu(View view){
-        startActivity(new Intent(this , StartMenu.class));
-        finish() ;
+        AlertBoxMenu(StartGame_3x3.this , "Your progress will be lost !");
     }
     public void GoToExit(View view){
-        finish() ;
+        AlertBoxExit(StartGame_3x3.this , "Do you really want to exit ?");
     }
     public void LaunchGame(View view){
-        startActivity(new Intent(this , StartGame_3x3.class));
-        finish() ;
+        AlertBoxRetry(StartGame_3x3.this , "Your progress will be lost !");
+    }
+    public void AlertBoxMenu(Context context , String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setTitle("Alert !");
+        builder.setCancelable(true);
+        builder.setPositiveButton("confirm", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // do things. . .
+            startActivity(new Intent(this , StartMenu.class));
+            finish() ;
+        });
+        builder.setNegativeButton("cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    public void AlertBoxExit(Context context , String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setTitle("Alert !");
+        builder.setCancelable(true);
+        builder.setPositiveButton("confirm", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // do things. . .
+            finish() ;
+        });
+        builder.setNegativeButton("cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    public void AlertBoxRetry(Context context , String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setTitle("Alert !");
+        builder.setCancelable(true);
+        builder.setPositiveButton("confirm", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // do things. . .
+            startActivity(new Intent(this , StartGame_3x3.class));
+            finish() ;
+        });
+        builder.setNegativeButton("cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
