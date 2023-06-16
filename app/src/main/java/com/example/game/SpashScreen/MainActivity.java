@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private void GoToMenu(){
         new Handler().postDelayed(
                 ()->{
-                    startActivity(new Intent(MainActivity.this , StartMenu.class));
+                    startActivity(new Intent(MainActivity.this , MainMenu.class));
                     finish() ;
                 }
                 ,500) ;

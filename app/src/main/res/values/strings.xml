@@ -14,6 +14,7 @@
         <item>@string/SixCrossSix</item>
     </string-array>
     <!-- game string resources -->
+    <string name="game_play">Play</string>
     <string name="game_start"> start    </string>
     <string name="game_menu"> menu    </string>
     <string name="game_exit"> exit    </string>

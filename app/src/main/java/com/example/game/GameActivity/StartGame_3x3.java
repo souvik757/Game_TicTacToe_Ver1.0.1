@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.game.GameLogic.* ;
 
+import com.example.game.ModelView.MainMenu;
 import com.example.game.ModelView.StartMenu;
 import com.example.game.R;
 
@@ -198,6 +199,7 @@ public class StartGame_3x3 extends AppCompatActivity {
         builder.setCancelable(true);
         builder.setPositiveButton("confirm", (DialogInterface.OnClickListener) (dialog, which) -> {
             // do things. . .
+            startActivity(new Intent(this , MainMenu.class));
             finish() ;
         });
         builder.setNegativeButton("cancel", (DialogInterface.OnClickListener) (dialog, which) -> {

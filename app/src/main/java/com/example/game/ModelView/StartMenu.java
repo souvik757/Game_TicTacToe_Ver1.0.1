@@ -78,4 +78,10 @@ public class StartMenu extends AppCompatActivity {
             finish();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(StartMenu.this , MainMenu.class));
+        finish() ;
+    }
 }
