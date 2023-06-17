@@ -1,4 +1,6 @@
 package com.example.game.GameActivity;
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ArgbEvaluator;
@@ -8,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -113,6 +116,7 @@ public class StartGame_3x3 extends AppCompatActivity {
             }
             else{
                 ChangeBackground();
+                _vibrate_();
                 Toast.makeText(this, "draw", Toast.LENGTH_SHORT).show();
             }
             DisableCLick() ;
@@ -223,5 +227,17 @@ public class StartGame_3x3 extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertBoxExit(StartGame_3x3.this , "Your progress will be lost !");
+    }
+    private void _vibrate_(){
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            // Vibrate for 500 milliseconds (0.5 seconds)
+            vibrator.vibrate(500);
+        }
     }
 }

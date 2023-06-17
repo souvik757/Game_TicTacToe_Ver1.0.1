@@ -4,18 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.game.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -25,6 +31,7 @@ public class MainMenu extends AppCompatActivity {
     private StorageReference storageRef1 = FirebaseStorage.getInstance().getReference();
     private LinearLayoutCompat mainBackGround ;
     private ImageView img1 ;
+    private Button profile ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +40,18 @@ public class MainMenu extends AppCompatActivity {
         InitializeViews() ;
     }
     private void InitializeWidgets(){
-        img1           = findViewById(R.id.Button_Play)    ;
+        img1    = findViewById(R.id.Button_Play)    ;
+        profile = findViewById(R.id.Button_Profile) ;
     }
     private void InitializeViews(){
         storageRef1 = storageRef1.child("BackGrounds/play.png") ;
         SetResourcesForImageView(storageRef1, img1) ;
+    }
+    public void InitializeAnimations(View view){
+        scaleImage(1.7f);
+        new Handler().postDelayed(()->{
+            scaleImage(1.0f);
+        } , 100) ;
     }
     private void SetResourcesForImageView(StorageReference reference , ImageView imageView){
         // Fetch the download URL for the image
@@ -53,6 +67,13 @@ public class MainMenu extends AppCompatActivity {
                 // Handle any errors that occur while fetching the image
             }
         });
+    }
+
+    public void GoToProfile(View view){
+        rotateImage(180);
+        new Handler().postDelayed(()->{
+            Snackbar.make(view , "coming soon !" , Snackbar.LENGTH_LONG).show();
+        } , 100) ;
     }
 
     public void GoToNextMenu(View view) {
@@ -79,4 +100,36 @@ public class MainMenu extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+    private void scaleImage(float scale) {
+        ObjectAnimator scaleAnimatorX = ObjectAnimator.ofFloat(img1, "scaleX", scale);
+        ObjectAnimator scaleAnimatorY = ObjectAnimator.ofFloat(img1, "scaleY", scale);
+
+        scaleAnimatorX.setDuration(500);
+        scaleAnimatorY.setDuration(500);
+
+        scaleAnimatorX.start();
+        scaleAnimatorY.start();
+    }
+    private void rotateImage(float rotation) {
+        ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(profile, "rotation", rotation);
+        rotationAnimator.setDuration(500);
+        rotationAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        rotationAnimator.start();
+    }
 }
+/*  showCustomSnackbar("");
+
+    private void showCustomSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        View customSnackbarView = getLayoutInflater().inflate(R.layout.custom_snackbar_layout, null);
+        ImageView iconImageView = customSnackbarView.findViewById(R.id.iconImageView);
+        iconImageView.setImageResource(R.drawable.ic_alert);
+        TextView messageTextView = customSnackbarView.findViewById(R.id.messageTextView);
+        messageTextView.setText("Custom Snackbar");
+        snackbarLayout.addView(customSnackbarView, 0);
+        snackbarLayout.setBackgroundColor(Color.RED);
+        snackbar.show();
+    }
+}
+ */

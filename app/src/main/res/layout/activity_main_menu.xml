@@ -14,15 +14,12 @@
         android:layout_marginBottom="50dp"
         android:orientation="horizontal">
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Button_Profile"
             android:onClick="GoToProfile"
             android:background="@drawable/baseline_menu_24"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"/>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="350dp"
@@ -34,11 +31,12 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="38dp"
         android:layout_marginBottom="272dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/Button_Play"
+            android:onClick="InitializeAnimations"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_gravity="center"

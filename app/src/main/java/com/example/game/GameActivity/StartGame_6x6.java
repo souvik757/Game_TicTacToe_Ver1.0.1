@@ -257,4 +257,8 @@ public class StartGame_6x6 extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+    @Override
+    public void onBackPressed() {
+        AlertBoxExit(StartGame_6x6.this , "Your progress will be lost !");
+    }
 }
