@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/color_pallet"
+    tools:context=".ModelView.Account.SignUp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <EditText
+            android:id="@+id/_email_"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="12dp"
+            android:padding="10dp"
+            android:hint="email"
+            android:textColorHint="@color/ash"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:background="@drawable/background_setting_1"/>
+        <EditText
+            android:id="@+id/_password_"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="12dp"
+            android:padding="10dp"
+            android:hint="password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/ash"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:background="@drawable/background_setting_1"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/_signup_"
+            android:onClick="CreateUserAccount"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_margin="12dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_selector"
+            android:textAllCaps="false"
+            android:text="sign up"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+</ScrollView>

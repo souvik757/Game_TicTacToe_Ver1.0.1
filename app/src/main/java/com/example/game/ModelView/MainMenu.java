@@ -12,11 +12,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.game.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,6 +53,7 @@ public class MainMenu extends AppCompatActivity {
         scaleImage(1.7f);
         new Handler().postDelayed(()->{
             scaleImage(1.0f);
+            _vibrate_();
         } , 100) ;
     }
     private void SetResourcesForImageView(StorageReference reference , ImageView imageView){
@@ -71,9 +74,9 @@ public class MainMenu extends AppCompatActivity {
 
     public void GoToProfile(View view){
         rotateImage(180);
-        new Handler().postDelayed(()->{
-            Snackbar.make(view , "coming soon !" , Snackbar.LENGTH_LONG).show();
-        } , 100) ;
+        startActivity(new Intent(MainMenu.this , Settings.class));
+        overridePendingTransition(R.anim.left_entry , R.anim.left_exit) ;
+        finish() ;
     }
 
     public void GoToNextMenu(View view) {
@@ -116,20 +119,10 @@ public class MainMenu extends AppCompatActivity {
         rotationAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         rotationAnimator.start();
     }
-}
-/*  showCustomSnackbar("");
-
-    private void showCustomSnackbar(String message) {
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
-        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-        View customSnackbarView = getLayoutInflater().inflate(R.layout.custom_snackbar_layout, null);
-        ImageView iconImageView = customSnackbarView.findViewById(R.id.iconImageView);
-        iconImageView.setImageResource(R.drawable.ic_alert);
-        TextView messageTextView = customSnackbarView.findViewById(R.id.messageTextView);
-        messageTextView.setText("Custom Snackbar");
-        snackbarLayout.addView(customSnackbarView, 0);
-        snackbarLayout.setBackgroundColor(Color.RED);
-        snackbar.show();
+    private void _vibrate_(){
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            vibrator.vibrate(80);
+        }
     }
 }
- */

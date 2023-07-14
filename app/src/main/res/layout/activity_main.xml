@@ -24,7 +24,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn1"
                 android:background="@drawable/circle"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/offwhite"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <androidx.appcompat.widget.AppCompatButton
@@ -36,7 +36,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn3"
                 android:background="@drawable/cross"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/offwhite"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
         </LinearLayout>
@@ -48,7 +48,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn4"
                 android:background="@drawable/circle"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/offwhite"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <androidx.appcompat.widget.AppCompatButton
@@ -85,7 +85,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn9"
                 android:background="@drawable/circle"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/offwhite"
                 android:layout_width="40dp"
                 android:layout_height="40dp"/>
         </LinearLayout>
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="T"
-            android:textColor="@color/white"
+            android:textColor="@color/offwhite"
             android:textSize="50dp" />
 
         <TextView
@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="C"
-            android:textColor="@color/white"
+            android:textColor="@color/offwhite"
             android:textSize="50dp"/>
     </LinearLayout>
     <LinearLayout
@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="T"
-            android:textColor="@color/white"
+            android:textColor="@color/offwhite"
             android:textSize="30dp" />
 
         <TextView
@@ -143,7 +143,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="C"
-            android:textColor="@color/white"
+            android:textColor="@color/offwhite"
             android:textSize="30dp"/>
     </LinearLayout>
     <LinearLayout
@@ -156,7 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="T"
-            android:textColor="@color/white"
+            android:textColor="@color/offwhite"
             android:textSize="30dp" />
 
         <TextView
@@ -170,7 +170,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="E"
-            android:textColor="@color/white"
+            android:textColor="@color/offwhite"
             android:textSize="30dp"/>
     </LinearLayout>
     <LinearLayout

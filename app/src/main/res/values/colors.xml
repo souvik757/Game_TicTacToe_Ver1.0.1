@@ -7,12 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="trans">#00FFFFFF</color>
     <!-- UI color palettes -->
-    <color name="white">#f1faee</color>
+    <color name="offwhite">#f1faee</color>
+    <color name="white">#FFFFFF</color>
+    <color name="trans_white">#74F1FAEE</color>
     <color name="green">#A0FF32</color>
     <color name="ash">#404040</color>
     <color name="black">#FF000000</color>
     <color name="red">#D50000</color>
     <color name="sky">#a8dadc</color>
+    <color name="trans_sky">#84A8DADC</color>
     <color name="blue">#457b9d</color>
     <color name="navy">#1d3557</color>
 </resources>

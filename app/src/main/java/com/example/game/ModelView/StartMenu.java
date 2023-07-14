@@ -8,6 +8,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.example.game.GameActivity.StartGame_3x3;
 import com.example.game.GameActivity.StartGame_4x4;
 import com.example.game.GameActivity.StartGame_6x6;
@@ -57,7 +59,7 @@ public class StartMenu extends AppCompatActivity {
     }
     public void start_game(View view){
         if(!isClicked){
-            Snackbar.make(view , "select a player !" , Snackbar.LENGTH_LONG).show();
+            showCustomSnackbar("select a player");
         }
         else {
         /*
@@ -79,6 +81,18 @@ public class StartMenu extends AppCompatActivity {
         }
     }
 
+    private void showCustomSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), " ", Snackbar.LENGTH_LONG);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        View customSnackbarView = getLayoutInflater().inflate(R.layout.custom_snackbar_layout, null);
+        ImageView iconImageView = customSnackbarView.findViewById(R.id.iconImageView);
+        iconImageView.setImageResource(R.drawable.baseline_cancel_24);
+        TextView messageTextView = customSnackbarView.findViewById(R.id.messageTextView);
+        messageTextView.setText(message);
+        snackbarLayout.addView(customSnackbarView, 0);
+        snackbarLayout.setBackgroundColor(getColor(R.color.green));
+        snackbar.show();
+    }
     @Override
     public void onBackPressed() {
         startActivity(new Intent(StartMenu.this , MainMenu.class));

@@ -10,12 +10,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.game.GameLogic.* ;
@@ -23,6 +25,7 @@ import com.example.game.GameLogic.* ;
 import com.example.game.ModelView.MainMenu;
 import com.example.game.ModelView.StartMenu;
 import com.example.game.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,11 +34,12 @@ public class StartGame_3x3 extends AppCompatActivity {
     private int counter = -1 ;
     private Button[][] button;
     private Button ButtonRetry ;
-    private Map<Button , Integer> val = new HashMap<>() ;
     private LinearLayout Board ;
     private ImageView PlayerTurn ;
     private ImageView CircleWin ;
     private ImageView CrossWin ;
+    private boolean IsGameOver = false ;
+    private Map<Button , Integer> val = new HashMap<>() ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +100,7 @@ public class StartGame_3x3 extends AppCompatActivity {
         String winner = CheckForWinner() ;
         if(counter < 8){
             if(!winner.equals("draw")){
+                IsGameOver = true ;
                 if(winner.equals("circle")){
                     CircleWin.setVisibility(View.VISIBLE);
                 }
@@ -107,6 +112,7 @@ public class StartGame_3x3 extends AppCompatActivity {
         }
         else{
             if(!winner.equals("draw")){
+                IsGameOver = true ;
                 if(winner.equals("circle")){
                     CircleWin.setVisibility(View.VISIBLE);
                 }
@@ -115,9 +121,10 @@ public class StartGame_3x3 extends AppCompatActivity {
                 }
             }
             else{
-                ChangeBackground();
+                IsGameOver = true ;
                 _vibrate_();
-                Toast.makeText(this, "draw", Toast.LENGTH_SHORT).show();
+                ChangeBackground();
+                showCustomSnackbar("Game draw");
             }
             DisableCLick() ;
         }
@@ -131,7 +138,7 @@ public class StartGame_3x3 extends AppCompatActivity {
         if(X != -1 || Y != -1 || Z != -1){
             if(X != -1){
                 if(X == raw.circle)
-                    return "circle" ;
+                    return "circle";
                 if(X == raw.cross)
                     return "cross" ;
             }
@@ -142,10 +149,12 @@ public class StartGame_3x3 extends AppCompatActivity {
                     return "cross" ;
             }
             if(Z != -1){
-                if(Z == raw.circle)
-                    return "circle" ;
-                if(Z == raw.cross)
-                    return "cross" ;
+                if(Z == raw.circle) {
+                    return "circle";
+                }
+                if(Z == raw.cross) {
+                    return "cross";
+                }
             }
         }
         return "draw" ;
@@ -155,7 +164,7 @@ public class StartGame_3x3 extends AppCompatActivity {
         int endColor = getResources().getColor(R.color.red);
 
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
-        colorAnimation.setDuration(3000); // Duration in milliseconds
+        colorAnimation.setDuration(3000);
 
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -178,7 +187,10 @@ public class StartGame_3x3 extends AppCompatActivity {
         AlertBoxExit(StartGame_3x3.this , "Do you really want to exit ?");
     }
     public void LaunchGame(View view){
-        AlertBoxRetry(StartGame_3x3.this , "Your progress will be lost !");
+        if(IsGameOver)
+            AlertBoxRetry(StartGame_3x3.this , "Play again ?");
+        else
+            AlertBoxRetry(StartGame_3x3.this , "Your progress will be lost !");
     }
     public void AlertBoxMenu(Context context , String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -229,15 +241,29 @@ public class StartGame_3x3 extends AppCompatActivity {
         alertDialog.show();
     }
 
-    @Override
-    public void onBackPressed() {
-        AlertBoxExit(StartGame_3x3.this , "Your progress will be lost !");
-    }
     private void _vibrate_(){
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         if (vibrator != null && vibrator.hasVibrator()) {
-            // Vibrate for 500 milliseconds (0.5 seconds)
-            vibrator.vibrate(500);
+            vibrator.vibrate(200);
         }
+    }
+    private void showCustomSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), " ", Snackbar.LENGTH_LONG);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        View customSnackbarView = getLayoutInflater().inflate(R.layout.custom_snackbar_layout, null);
+        ImageView iconImageView = customSnackbarView.findViewById(R.id.iconImageView);
+        iconImageView.setImageResource(R.drawable.baseline_cancel_24);
+        TextView messageTextView = customSnackbarView.findViewById(R.id.messageTextView);
+        messageTextView.setText(message);
+        snackbarLayout.addView(customSnackbarView, 0);
+        snackbarLayout.setBackgroundColor(getColor(R.color.red));
+        snackbar.show();
+    }
+    @Override
+    public void onBackPressed() {
+        if(IsGameOver)
+            AlertBoxExit(StartGame_3x3.this , "title screen !");
+        else
+            AlertBoxExit(StartGame_3x3.this , "Your progress will be lost !");
     }
 }

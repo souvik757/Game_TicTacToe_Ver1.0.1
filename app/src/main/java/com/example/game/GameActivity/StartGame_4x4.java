@@ -8,11 +8,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.game.GameLogic.NLogic;
@@ -21,6 +23,7 @@ import com.example.game.GameLogic.raw;
 import com.example.game.ModelView.MainMenu;
 import com.example.game.ModelView.StartMenu;
 import com.example.game.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +36,7 @@ public class StartGame_4x4 extends AppCompatActivity {
     private ImageView PlayerTurn ;
     private ImageView CircleWin ;
     private ImageView CrossWin ;
+    private boolean IsGameOver = false ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +107,7 @@ public class StartGame_4x4 extends AppCompatActivity {
         String winner = CheckForWinner() ;
         if(counter < 15){
             if(!winner.equals("draw")){
+                IsGameOver = true ;
                 if(winner.equals("circle")){
                     CircleWin.setVisibility(View.VISIBLE);
                 }
@@ -114,6 +119,7 @@ public class StartGame_4x4 extends AppCompatActivity {
         }
         else{
             if(!winner.equals("draw")){
+                IsGameOver = true ;
                 if(winner.equals("circle")){
                     CircleWin.setVisibility(View.VISIBLE);
                 }
@@ -122,8 +128,10 @@ public class StartGame_4x4 extends AppCompatActivity {
                 }
             }
             else{
+                IsGameOver = true ;
+                _vibrate_() ;
                 ChangeBackground();
-                Toast.makeText(this, "draw", Toast.LENGTH_SHORT).show();
+                showCustomSnackbar("Game draw");
             }
             DisableCLick() ;
         }
@@ -186,7 +194,10 @@ public class StartGame_4x4 extends AppCompatActivity {
         AlertBoxExit(StartGame_4x4.this , "Do you really want to exit ?");
     }
     public void LaunchGame(View view){
-        AlertBoxRetry(StartGame_4x4.this , "Your progress will be lost !");
+        if(IsGameOver)
+            AlertBoxRetry(StartGame_4x4.this , "Play again ?");
+        else
+            AlertBoxRetry(StartGame_4x4.this , "Your progress will be lost !");
     }
     public void AlertBoxMenu(Context context , String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -239,6 +250,27 @@ public class StartGame_4x4 extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertBoxExit(StartGame_4x4.this , "Your progress will be lost !");
+        if(IsGameOver)
+            AlertBoxExit(StartGame_4x4.this , "title screen !");
+        else
+            AlertBoxExit(StartGame_4x4.this , "Your progress will be lost !");
+    }
+    private void _vibrate_(){
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            vibrator.vibrate(500);
+        }
+    }
+    private void showCustomSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), " ", Snackbar.LENGTH_LONG);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        View customSnackbarView = getLayoutInflater().inflate(R.layout.custom_snackbar_layout, null);
+        ImageView iconImageView = customSnackbarView.findViewById(R.id.iconImageView);
+        iconImageView.setImageResource(R.drawable.baseline_cancel_24);
+        TextView messageTextView = customSnackbarView.findViewById(R.id.messageTextView);
+        messageTextView.setText(message);
+        snackbarLayout.addView(customSnackbarView, 0);
+        snackbarLayout.setBackgroundColor(getColor(R.color.red));
+        snackbar.show();
     }
 }
