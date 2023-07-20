@@ -67,5 +67,12 @@
             android:text="about"
             android:textSize="25dp"
             android:background="@drawable/button_selector"/>
+        <ProgressBar
+            android:id="@+id/progress_circular_setting"
+            android:visibility="gone"
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
     </LinearLayout>
 </ScrollView>

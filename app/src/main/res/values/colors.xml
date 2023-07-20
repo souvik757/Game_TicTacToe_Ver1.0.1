@@ -10,6 +10,7 @@
     <color name="offwhite">#f1faee</color>
     <color name="white">#FFFFFF</color>
     <color name="trans_white">#74F1FAEE</color>
+    <color name="transparent">#00F1FAEE</color>
     <color name="green">#A0FF32</color>
     <color name="ash">#404040</color>
     <color name="black">#FF000000</color>
