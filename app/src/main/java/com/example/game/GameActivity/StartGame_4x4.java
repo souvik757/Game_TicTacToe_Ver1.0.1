@@ -1,5 +1,7 @@
 package com.example.game.GameActivity;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -14,38 +16,62 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.game.GameLogic.NLogic;
-import com.example.game.GameLogic.ThreeLogic;
 import com.example.game.GameLogic.raw;
 import com.example.game.ModelView.MainMenu;
 import com.example.game.ModelView.StartMenu;
 import com.example.game.R;
+import com.example.game.UtilsClasses.FireStoreDataFields;
+import com.example.game.UtilsClasses.UtilMethods;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 public class StartGame_4x4 extends AppCompatActivity {
+    // resources
     private int counter = -1 ;
-    private Button[][] button;
-    private Button ButtonRetry ;
-    private Map<Button , Integer> val = new HashMap<>() ;
+    private String currPlayer ;
+    // layouts
     private LinearLayout Board ;
+    private RelativeLayout winStats ;
+    private ImageView toWin ;
+    private ImageView toLose ;
+    // widgets
+    private Button[][] button;
+    private FloatingActionButton ButtonRetry ;
+    private Map<Button , Integer> val = new HashMap<>() ;
     private ImageView PlayerTurn ;
     private ImageView CircleWin ;
     private ImageView CrossWin ;
     private boolean IsGameOver = false ;
+    // firebase var
+    private boolean status = true ;
+    private FirebaseAuth mAuth ;
+    private DocumentReference mDocReference ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game4x4);
         InitializeWidgets() ;
+        InitializeDatabase() ;
         InitializeViews() ;
         InitializeAnimations() ;
     }
     private void InitializeWidgets(){
+        currPlayer = getIntent().getStringExtra("selected_player") ;
         button = new Button[4][4] ;
         button[0][0] = findViewById(R.id.Button1) ;
         button[0][1] = findViewById(R.id.Button2) ;
@@ -67,6 +93,9 @@ public class StartGame_4x4 extends AppCompatActivity {
         button[3][2] = findViewById(R.id.Button15) ;
         button[3][3] = findViewById(R.id.Button16) ;
 
+        winStats = findViewById(R.id.status) ;
+        toWin = findViewById(R.id.hasToWin) ;
+        toLose = findViewById(R.id.hasToLose) ;
         ButtonRetry  = findViewById(R.id.Button_retry) ;
         InitializeBoard() ;
     }
@@ -76,16 +105,40 @@ public class StartGame_4x4 extends AppCompatActivity {
                 val.putIfAbsent(button[i][j] , raw.empty) ;
         }
     }
+    private void InitializeDatabase(){
+        mAuth = FirebaseAuth.getInstance() ;
+        if(mAuth.getCurrentUser() == null){
+            showCustomSnack_Bar("create an account to save progress" , R.color.blue);
+            status = false ;
+        }
+        else {
+            String collectionPath = UtilMethods.extractNameFromEmail(mAuth.getCurrentUser().getEmail());
+            mDocReference = FirebaseFirestore.getInstance().collection(collectionPath).document("playerInfo");
+        }
+    }
     private void InitializeViews(){
         Board = findViewById(R.id.GameBoard) ;
         PlayerTurn = findViewById(R.id.Button_turn) ;
         CircleWin = findViewById(R.id.winner_circle) ;
         CrossWin = findViewById(R.id.winner_cross) ;
-        PlayerTurn.setBackground(getDrawable(R.drawable.circle));
+        PlayerTurn.setBackground(AppCompatResources.getDrawable(StartGame_4x4.this , R.drawable.baseline_panorama_fish_eye_24));
     }
     private void InitializeAnimations(){
         Board.setAnimation(AnimationUtils.loadAnimation(StartGame_4x4.this , R.anim.bottom_to_up1));
         PlayerTurn.setAnimation(AnimationUtils.loadAnimation(StartGame_4x4.this , R.anim.bottom_to_up2));
+        winStats.setAnimation(AnimationUtils.loadAnimation(StartGame_4x4.this , R.anim.bottom_to_up2));
+        showWinnerStats() ;
+    }
+
+    private void showWinnerStats(){
+        if(currPlayer.equals("circle")) {
+            toWin.setBackgroundColor(getColor(R.color.red));
+            toLose.setBackgroundColor(getColor(R.color.green));
+        }
+        else {
+            toWin.setBackgroundColor(getColor(R.color.green));
+            toLose.setBackgroundColor(getColor(R.color.red));
+        }
     }
 
     public void GameAct(View view){
@@ -95,24 +148,37 @@ public class StartGame_4x4 extends AppCompatActivity {
             ButtonRetry.setVisibility(View.VISIBLE);
         view.findViewById(view.getId()).setEnabled(false);
         if(counter % 2 == 0) { // circle ::
-            view.findViewById(view.getId()).setBackground(getDrawable(R.drawable.circle_bg));
-            PlayerTurn.setBackground(getDrawable(R.drawable.cross));
+            view.findViewById(view.getId()).setBackgroundResource(R.drawable.circle_bg);
+            PlayerTurn.setBackground(AppCompatResources.getDrawable(StartGame_4x4.this , R.drawable.cross));
             val.put(view.findViewById(view.getId()) , raw.circle) ;
         }
         else { // cross ::
-            view.findViewById(view.getId()).setBackground(getDrawable(R.drawable.cross_bg));
-            PlayerTurn.setBackground(getDrawable(R.drawable.circle));
+            view.findViewById(view.getId()).setBackgroundResource(R.drawable.cross_bg);
+            PlayerTurn.setBackground(AppCompatResources.getDrawable(StartGame_4x4.this , R.drawable.baseline_panorama_fish_eye_24));
             val.put(view.findViewById(view.getId()) , raw.cross) ;
         }
         String winner = CheckForWinner() ;
         if(counter < 15){
             if(!winner.equals("draw")){
                 IsGameOver = true ;
+                // show winner
                 if(winner.equals("circle")){
                     CircleWin.setVisibility(View.VISIBLE);
                 }
                 if(winner.equals("cross")){
                     CrossWin.setVisibility(View.VISIBLE);
+                }
+                // ....
+                if(!winner.equals(currPlayer)){
+                    _vibrate_();
+                    ChangeBackground();
+                    showCustomSnack_Bar("you lose" , R.color.red);
+                }
+                else { // you win
+                    showCustomSnack_Bar(winner+" have won !" , R.color.green);
+                    // update score here
+                    // update credit here
+                    updateDatabase(winner);
                 }
                 DisableCLick() ;
             }
@@ -120,18 +186,31 @@ public class StartGame_4x4 extends AppCompatActivity {
         else{
             if(!winner.equals("draw")){
                 IsGameOver = true ;
+                // show winner
                 if(winner.equals("circle")){
                     CircleWin.setVisibility(View.VISIBLE);
                 }
                 if(winner.equals("cross")){
                     CrossWin.setVisibility(View.VISIBLE);
                 }
+                // ....
+                if(!winner.equals(currPlayer)){
+                    _vibrate_();
+                    ChangeBackground();
+                    showCustomSnack_Bar("Game draw" , R.color.red);
+                }
+                else { // you win
+                    showCustomSnack_Bar(winner+" have won !" , R.color.green);
+                    // update score here
+                    // update credit here
+                    updateDatabase(winner);
+                }
             }
             else{
                 IsGameOver = true ;
                 _vibrate_() ;
-                ChangeBackground();
-                showCustomSnackbar("Game draw");
+                ChangeBackground() ;
+                showCustomSnack_Bar("Game draw" , R.color.red) ;
             }
             DisableCLick() ;
         }
@@ -165,6 +244,81 @@ public class StartGame_4x4 extends AppCompatActivity {
         }
         return "draw" ;
     }
+
+    private void updateDatabase(String param){
+        if(status) {
+            if (param.equals("circle"))
+                updateScoreForCircle();
+            else
+                updateScoreForCross();
+        }
+    }
+    private void updateScoreForCircle(){
+        Map<String, Object> dataMap = new HashMap<>() ;
+        mDocReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    // total wins
+                    int circleWin = Integer.parseInt(String.valueOf(documentSnapshot.getString(FireStoreDataFields.winAsCircle))) ;
+                    dataMap.put(FireStoreDataFields.winAsCircle , String.valueOf((circleWin+1))) ;
+                    // total wins on 4X4 board
+                    int win4X4 = Integer.parseInt(String.valueOf(documentSnapshot.getString(FireStoreDataFields.score4X4))) ;
+                    dataMap.put(FireStoreDataFields.score4X4 , String.valueOf(win4X4 + 1)) ;
+                    // total credit
+                    int prevCredit = Integer.parseInt(String.valueOf(documentSnapshot.getString(FireStoreDataFields.credit))) ;
+                    dataMap.put(FireStoreDataFields.credit , String.valueOf(prevCredit+4)) ;
+
+                    mDocReference.update(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful())
+                                showCustomSnack_Bar("progress saved" , R.color.green);
+                        }
+                    }) ;
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace() ;
+            }
+        }) ;
+    }
+    private void updateScoreForCross(){
+        Map<String, Object> dataMap = new HashMap<>() ;
+        mDocReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    // total wins
+                    int crossWin = Integer.parseInt(String.valueOf(documentSnapshot.getString(FireStoreDataFields.winAsCross))) ;
+                    dataMap.put(FireStoreDataFields.winAsCross , String.valueOf((crossWin+1))) ;
+                    // total wins on 4X4 board
+                    int win4X4 = Integer.parseInt(String.valueOf(documentSnapshot.getString(FireStoreDataFields.score4X4))) ;
+                    dataMap.put(FireStoreDataFields.score4X4 , String.valueOf(win4X4 + 1)) ;
+                    // total credit
+                    int prevCredit = Integer.parseInt(String.valueOf(documentSnapshot.getString(FireStoreDataFields.credit))) ;
+                    dataMap.put(FireStoreDataFields.credit , String.valueOf(prevCredit+4)) ;
+                    mDocReference.update(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful())
+                                showCustomSnack_Bar("progress saved" , R.color.green);
+                        }
+                    }) ;
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace() ;
+            }
+        }) ;
+    }
+
+
+
 
     private void ChangeBackground(){
         int startColor = getResources().getColor(R.color.ash);
@@ -238,7 +392,9 @@ public class StartGame_4x4 extends AppCompatActivity {
         builder.setCancelable(true);
         builder.setPositiveButton("confirm", (DialogInterface.OnClickListener) (dialog, which) -> {
             // do things. . .
-            startActivity(new Intent(this , StartGame_4x4.class));
+            Intent i = new Intent(this , StartGame_4x4.class) ;
+            i.putExtra("selected_player", currPlayer) ;
+            startActivity(i);
             finish() ;
         });
         builder.setNegativeButton("cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
@@ -261,16 +417,16 @@ public class StartGame_4x4 extends AppCompatActivity {
             vibrator.vibrate(500);
         }
     }
-    private void showCustomSnackbar(String message) {
+    private void showCustomSnack_Bar(String message , int color) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), " ", Snackbar.LENGTH_LONG);
         Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
         View customSnackbarView = getLayoutInflater().inflate(R.layout.custom_snackbar_layout, null);
         ImageView iconImageView = customSnackbarView.findViewById(R.id.iconImageView);
-        iconImageView.setImageResource(R.drawable.baseline_cancel_24);
+        iconImageView.setImageResource(R.drawable.baseline_circle_notifications_24);
         TextView messageTextView = customSnackbarView.findViewById(R.id.messageTextView);
         messageTextView.setText(message);
         snackbarLayout.addView(customSnackbarView, 0);
-        snackbarLayout.setBackgroundColor(getColor(R.color.red));
+        snackbarLayout.setBackgroundColor(getColor(color));
         snackbar.show();
     }
 }

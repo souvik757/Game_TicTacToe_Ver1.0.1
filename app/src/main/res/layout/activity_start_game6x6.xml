@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/offwhite"
+    android:background="@color/offWhite"
     tools:context=".GameActivity.StartGame_6x6">
     <LinearLayout
         android:layout_width="match_parent"

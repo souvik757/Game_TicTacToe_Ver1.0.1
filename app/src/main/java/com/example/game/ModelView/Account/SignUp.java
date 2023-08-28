@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.game.R;
-import com.example.game.UtilsClasses.DataFields;
+import com.example.game.UtilsClasses.FireStoreDataFields;
 import com.example.game.UtilsClasses.UtilMethods;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -145,27 +145,29 @@ public class SignUp extends AppCompatActivity {
     }
     private void createFireStore(String email , String UID){
         String collectionPath , uid , date ;
-        int score3 , score4 , score5 , winCircle , winCross , activeTime ;
+        String credit , score3 , score4 , score5 , winCircle , winCross , activeTime ;
         collectionPath = UtilMethods.extractNameFromEmail(email) ;
         uid = UID ;
         date = String.valueOf(new Timestamp(new Date())).trim() ;
-        score3 = 0 ;
-        score4 = 0 ;
-        score5 = 0 ;
-        winCircle = 0 ;
-        winCross = 0 ;
-        activeTime = 0 ;
+        credit = "0" ;
+        score3 = "0" ;
+        score4 = "0" ;
+        score5 = "0" ;
+        winCircle = "0" ;
+        winCross = "0" ;
+        activeTime = "0" ;
         Map<String , Object> info = new HashMap<>() ;
-        info.put(DataFields.userID , uid) ;
-        info.put(DataFields.dateOfCreation , date) ;
-        info.put(DataFields.score3X3 , score3) ;
-        info.put(DataFields.score4X4 , score4) ;
-        info.put(DataFields.score5X5 , score5) ;
-        info.put(DataFields.winAsCircle , winCircle) ;
-        info.put(DataFields.winAsCross , winCross) ;
-        info.put(DataFields.totalActiveHour , activeTime) ;
+        info.put(FireStoreDataFields.credit , credit) ;
+        info.put(FireStoreDataFields.userID , uid) ;
+        info.put(FireStoreDataFields.dateOfCreation , date) ;
+        info.put(FireStoreDataFields.score3X3 , score3) ;
+        info.put(FireStoreDataFields.score4X4 , score4) ;
+        info.put(FireStoreDataFields.score5X5 , score5) ;
+        info.put(FireStoreDataFields.winAsCircle , winCircle) ;
+        info.put(FireStoreDataFields.winAsCross , winCross) ;
+        info.put(FireStoreDataFields.totalActiveHour , activeTime) ;
         db = FirebaseFirestore.getInstance() ;
-        db.collection(collectionPath).document(DataFields.playerInfo)
+        db.collection(collectionPath).document(FireStoreDataFields.playerInfo)
                 .set(info)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

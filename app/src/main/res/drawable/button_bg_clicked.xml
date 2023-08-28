@@ -11,7 +11,7 @@
         android:radius="8dp"
         />
     <gradient
-        android:startColor="@color/offwhite"
-        android:endColor="@color/offwhite"
+        android:startColor="@color/offWhite"
+        android:endColor="@color/offWhite"
         />
 </shape>

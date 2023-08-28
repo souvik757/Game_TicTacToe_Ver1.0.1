@@ -16,26 +16,15 @@ import android.widget.Toast;
 
 import com.example.game.R;
 import com.example.game.ModelView.Account.SignIn;
-import com.example.game.UtilsClasses.DataFields;
-import com.example.game.UtilsClasses.UtilMethods;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.ktx.Firebase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import org.checkerframework.checker.guieffect.qual.UI;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Settings extends AppCompatActivity {
     // Get a reference to the Firebase Storage instance

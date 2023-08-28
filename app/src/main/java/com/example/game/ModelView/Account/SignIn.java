@@ -18,23 +18,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.game.R;
+import com.example.game.UtilsClasses.RealtimeDataFields;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignIn extends AppCompatActivity {
     // firebase auth var :
     private FirebaseAuth mAuth ;
-    private FirebaseUser currentUser ;
+    private DatabaseReference mReference ;
     // widgets
     private EditText email ;
     private EditText password ;
     private Button signIn ;
-    private Toolbar toolbar ;
     private ProgressBar progressBar ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +48,11 @@ public class SignIn extends AppCompatActivity {
         email = findViewById(R.id._email_) ;
         password = findViewById(R.id._password_) ;
         signIn = findViewById(R.id._signin_) ;
-        toolbar = findViewById(R.id.toolBar) ;
         progressBar = findViewById(R.id.progress_circular) ;
     }
     private void initializeDatabase(){
         mAuth = FirebaseAuth.getInstance() ;
+        mReference = FirebaseDatabase.getInstance().getReference() ;
     }
     private void initializeOnClickEvents(){
         signIn.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +77,8 @@ public class SignIn extends AppCompatActivity {
                             showCustomToast("signed in");
                             progressBar.setVisibility(View.GONE);
                             // go to profile
+                            // update status on realtime
+                            updateRealtime(Email);
                         }
                         else{
                             showCustomToast("unexpected error occurred");
@@ -86,6 +88,7 @@ public class SignIn extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace() ;
                         showCustomToast("email or password may be wrong");
                         progressBar.setVisibility(View.GONE);
                     }
@@ -93,6 +96,12 @@ public class SignIn extends AppCompatActivity {
             }
         });
     }
+    private void updateRealtime(String mail){
+        String UID = mAuth.getCurrentUser().getUid() ;
+        mReference.child(RealtimeDataFields.users).child(UID).child(RealtimeDataFields._users_.status).setValue(true) ;
+        mReference.child(RealtimeDataFields.users).child(UID).child(RealtimeDataFields._users_.mail).setValue(mail) ;
+    }
+
     public void GoToSignUp(View view) {
         startActivity(new Intent(SignIn.this , SignUp.class));
     }

@@ -9,7 +9,7 @@
         android:type="linear"
         />
     <stroke
-        android:color="@color/offwhite"
+        android:color="@color/offWhite"
         android:width="2dp"
         />
     <corners

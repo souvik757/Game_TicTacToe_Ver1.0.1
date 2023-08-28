@@ -39,18 +39,20 @@ dependencies {
     // firebase dependencies
     implementation platform('com.google.firebase:firebase-bom:32.1.0')
     implementation 'com.google.firebase:firebase-analytics'
+    // firebase realtime
+    implementation 'com.google.firebase:firebase-database' ;
     //  cloud Fire-store
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation "com.google.firebase:firebase-firestore"
-    implementation 'com.google.firebase:firebase-firestore:24.7.0'
+    implementation 'com.google.firebase:firebase-firestore:24.7.1'
     //  Firebase Storage
     implementation 'com.google.firebase:firebase-core:21.1.1'
     implementation 'com.google.firebase:firebase-storage:20.2.1'
     // Firebase Authentication
     implementation 'com.google.firebase:firebase-auth'
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 }

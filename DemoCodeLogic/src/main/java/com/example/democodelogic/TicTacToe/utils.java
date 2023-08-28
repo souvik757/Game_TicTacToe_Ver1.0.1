@@ -1,6 +1,9 @@
-package com.example.game.UtilsClasses;
+package com.example.democodelogic.TicTacToe;
 
-public class UtilMethods {
+public class utils {
+    public static void main(String[] args) {
+        System.out.println(extractNameFromEmail("howai8074@gmail.com"));
+    }
     public static String extractNameFromEmail(String email){
         int index = 0 ;
         for (char ch : email.toCharArray()){

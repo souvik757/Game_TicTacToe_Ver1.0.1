@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="commonMargin">16dp</dimen>
+    <dimen name="commonText">19sp</dimen>
+    <dimen name="commonPadding">8dp</dimen>
+</resources>

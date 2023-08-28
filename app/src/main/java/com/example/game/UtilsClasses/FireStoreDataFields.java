@@ -1,9 +1,10 @@
 package com.example.game.UtilsClasses;
 
-public class DataFields {
+public class FireStoreDataFields {
     public static String playerInfo = "playerInfo";
     public static String userID = "userID";
     public static String dateOfCreation = "dateOfCreation";
+    public static final String credit = "credit" ;
     public static String score3X3 = "score3X3" ;
     public static String score4X4 = "score4X4" ;
     public static String score5X5 = "score5X5" ;

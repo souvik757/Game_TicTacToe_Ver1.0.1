@@ -1,253 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/offwhite"
+    android:fillViewport="true"
+    android:background="@color/ash"
     tools:context=".GameActivity.StartGame_4x4">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/Button_menu"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/commonMargin"
+            android:onClick="GoToMenu"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:text="@string/game_menu"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/Button_exit"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/commonMargin"
+            android:onClick="GoToExit"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:text="@string/game_exit"/>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="10dp">
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button_menu"
-                android:onClick="GoToMenu"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:textAllCaps="false"
-                android:text="@string/game_menu"
-                android:textColor="@color/black"
-                android:background="@drawable/button_selector"/>
-            <View
-                android:layout_width="200dp"
-                android:layout_height="60dp"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button_exit"
-                android:onClick="GoToExit"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:textAllCaps="false"
-                android:text="@string/game_exit"
-                android:textColor="@color/black"
-                android:background="@drawable/button_selector"/>
-        </LinearLayout>
-        <LinearLayout
+            android:id="@+id/showWinner"
+            android:layout_below="@+id/Button_menu"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:orientation="horizontal">
             <ImageView
                 android:id="@+id/winner_circle"
+                android:backgroundTint="@color/white"
                 android:background="@drawable/circle"
                 android:layout_width="100dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:layout_height="100dp"/>
             <ImageView
                 android:id="@+id/winner_cross"
+                android:backgroundTint="@color/white"
                 android:background="@drawable/cross"
                 android:layout_width="100dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:layout_height="100dp"/>
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/GameBoard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/ash"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/GameBoard"
+            android:layout_below="@+id/showWinner"
+            android:layout_centerHorizontal="true"
+            android:background="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button1"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
+            android:layout_marginTop="@dimen/commonMargin"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button1"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+                    android:layout_marginBottom="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button2"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
 
-                android:layout_marginBottom="5dp"
-                />
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button2"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
+                    android:layout_marginStart="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button3"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
 
-                android:layout_marginStart="5dp"
-                />
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button3"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
+                    android:layout_marginStart="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button4"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
 
-                android:layout_marginStart="5dp"
-                />
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button4"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
+                    android:layout_marginStart="5dp"
+                    />
 
-                android:layout_marginStart="5dp"
-                />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button5"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
 
+                    android:layout_marginBottom="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button6"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button7"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button8"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button9"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginBottom="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button10"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button11"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button12"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button13"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button14"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button15"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Button16"
+                    android:onClick="GameAct"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/button_bg_1"
+
+                    android:layout_marginStart="5dp"
+                    />
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/Button_turn"
+            android:backgroundTint="@color/white"
+            android:layout_below="@+id/GameBoard"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/commonPadding"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
+        <RelativeLayout
+            android:id="@+id/status"
+            android:layout_below="@+id/Button_turn"
+            android:layout_marginStart="@dimen/commonMargin"
+            android:layout_marginTop="@dimen/commonMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/hasToWin"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+            <ImageView
+                android:id="@+id/winIco"
+                android:layout_toEndOf="@+id/hasToWin"
+                android:layout_marginStart="@dimen/commonMargin"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:backgroundTint="@color/white"
+                android:background="@drawable/cross"/>
+            <ImageView
+                android:id="@+id/hasToLose"
+                android:layout_marginTop="@dimen/commonPadding"
+                android:layout_below="@+id/hasToWin"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/loseIco"
+                android:layout_toEndOf="@+id/hasToLose"
+                android:layout_below="@+id/winIco"
+                android:layout_marginTop="@dimen/commonPadding"
+                android:layout_marginStart="@dimen/commonMargin"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:backgroundTint="@color/white"
+                android:background="@drawable/baseline_panorama_fish_eye_24"/>
+        </RelativeLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Button_retry"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:onClick="LaunchGame"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button5"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
-
-                android:layout_marginBottom="5dp"
-                />
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button6"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
-
-                android:layout_marginStart="5dp"
-                />
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button7"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
-
-                android:layout_marginStart="5dp"
-                />
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button8"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
-
-                android:layout_marginStart="5dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/Button9"
-            android:onClick="GameAct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/button_bg_1"
-
-            android:layout_marginBottom="5dp"
-            />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/Button10"
-            android:onClick="GameAct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/button_bg_1"
-
-            android:layout_marginStart="5dp"
-            />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/Button11"
-            android:onClick="GameAct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/button_bg_1"
-
-            android:layout_marginStart="5dp"
-            />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/Button12"
-            android:onClick="GameAct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/button_bg_1"
-
-            android:layout_marginStart="5dp"
-            />
-    </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button13"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button14"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
-
-                android:layout_marginStart="5dp"
-                />
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button15"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
-
-                android:layout_marginStart="5dp"
-                />
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Button16"
-                android:onClick="GameAct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/button_bg_1"
-
-                android:layout_marginStart="5dp"
-            />
-        </LinearLayout>
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/Button_turn"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        />
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/Button_retry"
-        android:onClick="LaunchGame"
-        android:visibility="invisible"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:textAllCaps="false"
-        android:layout_gravity="end"
-        android:layout_marginEnd="10dp"
-        android:text="@string/game_repeat"
-        android:textColor="@color/black"
-        android:background="@drawable/button_selector"/>
-</androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_margin="@dimen/commonMargin"
+            android:textAllCaps="false"
+            android:src="@drawable/retry"/>
+    </RelativeLayout>
+</ScrollView>
